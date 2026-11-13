@@ -2,17 +2,17 @@
 
 本仓库集中提供工具安装说明和 Release 产物，首个工具为 Android Recoder。项目源码保持私有。
 
-[下载 APK](https://github.com/xuegang-cn/release-tools/releases/download/android-recoder-v1.0.2/android-recoder.apk) · [下载 SHA-256 校验文件](https://github.com/xuegang-cn/release-tools/releases/download/android-recoder-v1.0.2/android-recoder.apk.sha256) · [Android Recoder v1.0.2 发布页](https://github.com/xuegang-cn/release-tools/releases/tag/android-recoder-v1.0.2) · [English](README_eng.md)
+[下载 APK](https://github.com/xuegang-cn/release-tools/releases/download/android-recoder-v1.0.2-2611101401/android-recoder.apk) · [下载 SHA-256 校验文件](https://github.com/xuegang-cn/release-tools/releases/download/android-recoder-v1.0.2-2611101401/android-recoder.apk.sha256) · [自适应验证包发布页](https://github.com/xuegang-cn/release-tools/releases/tag/android-recoder-v1.0.2-2611101401) · [English](README_eng.md)
 
 ## 工具目录
 
 | 工具 | 用途 | 安装包 |
 |---|---|---|
-| [Android Recoder](#android-recoder) | Android 车机操作录制回放、性能采集、循环与批量压测 | [v1.0.2 APK](https://github.com/xuegang-cn/release-tools/releases/download/android-recoder-v1.0.2/android-recoder.apk) |
+| [Android Recoder](#android-recoder) | Android 车机与手机操作录制回放、性能采集、循环与批量压测 | [1.0.2-2611101401 APK](https://github.com/xuegang-cn/release-tools/releases/download/android-recoder-v1.0.2-2611101401/android-recoder.apk) |
 
 ## Android Recoder
 
-Android Recoder 是可原生安装在 Android 车机上的测试工具，主应用包名为 `com.android.recoder`。可把屏幕操作保存为用例，回放检查执行结果，再按设定次数循环运行；性能采集用于观察被测应用运行时的指标。
+Android Recoder 是可原生安装在 Android 车机和手机上的测试工具，主应用包名为 `com.android.recoder`。可把屏幕操作保存为用例，回放检查执行结果，再按设定次数循环运行；性能采集用于观察被测应用运行时的指标。
 
 ### 主要功能
 
@@ -22,23 +22,44 @@ Android Recoder 是可原生安装在 Android 车机上的测试工具，主应�
 | 性能采集 | 选择被测应用与可用指标，采集帧率、CPU、内存等数据，保存记录并查看曲线。具体指标受系统接口与权限影响。 |
 | 循环与批量压测 | 单个用例可重复执行；批量计划可设置各用例次数、执行顺序和整组循环轮数。每次执行保留结果，失败后继续，也可从浮窗停止。 |
 | 屏幕类型与映射 | 提供自动识别、单屏、同一 display 的双联屏和独立多屏选项，以及触摸源映射；支持鼠标与 ADB 注入输入捕获，浮窗避让系统栏。 |
-| 通用界面 | 使用设备与录制点图标、灰绿配色，提供车机横屏和手机竖屏布局，默认配置不绑定汽车厂商。 |
+| 通用界面 | 根据当前窗口实际可用宽度调整，窄屏单列、达到 600dp 后双列，旋转时重新排版；窄屏用例名称与操作按钮分行显示，默认配置不绑定汽车厂商。 |
 
 ### 适用条件
 
-APK 包含 ARMv7 和 ARM64 原生库，最低 Android API 为 18；手势需 Android 7 及以上，无障碍截图与独立多屏录制回放需 Android 11 及以上。设备需允许所用功能的 ADB、无障碍、悬浮窗、存储或录屏授权，完整步骤见下文。
+同一 APK 包含 ARMv7、ARM64 和 x86_64 原生库，安装时由 Android 选择匹配版本。最低 Android API 为 18；手势需 Android 7 及以上，无障碍截图与独立多屏录制回放需 Android 11 及以上。设备需允许所用功能的 ADB、无障碍、悬浮窗、存储或录屏授权，完整步骤见下文。
 
 旧截图动作和主屏 Capture 模式不支持副屏，副屏节点与手势取决于设备开放的接口。
 
 ## 版本与实测范围
 
-本次发布标签为 `android-recoder-v1.0.2`，提供**车机联调验证包（Debug 签名）**，`versionName=1.0.2-2611021607`、`versionCode=41`，可直接安装，无需源码或编译，尚未采用正式生产签名。
+本次发布标签为 `android-recoder-v1.0.2-2611101401`，提供**手机与车机自适应验证包（Debug 签名）**，`versionName=1.0.2-2611101401`、`versionCode=41`，可直接安装，无需源码或编译，尚未采用正式生产签名。它与此前车机验证包的签名相同，可用 `adb install -r -g` 覆盖安装。
 
-2026 年 11 月 2 日，在一台 API 33 车机主屏的独立测试页面上，普通录制点击使计数由 0 变为 1，保存用例精确包含一条 `CLICK`。将计数清零后回放，报告为 `passed`，计数再次由 0 变为 1。自动测试共 218 项，217 项通过，1 项跳过。其他品牌、其他机型及手机尚未实测，权限、后台策略与多屏行为需分别验证。
+2026 年 11 月 10 日，在 Android 11 / API 30 和 Android 13 / API 33 手机模拟器上验证自适应改动。各次验证范围如下，避免将前一包的完整录放结果当作最终包的全部实测结果：
+
+| 验证包 | 结果 |
+|---|---|
+| `1.0.2-2611101348` | 两套模拟器均录制并保存一条 `CLICK`，计数 0→1；清零后回放为 `passed`，计数再次 0→1。Android 13 录制中完成竖→横→竖切换后仍可选择动作。Android 11 另采集 CPU、内存约 22.6 秒，生成 5 份有效 CSV。 |
+| `1.0.2-2611101354` | 修复首页切列时序。两套模拟器竖→横→竖后均保留四个入口，Android 11 再次回放通过；Android 13 的 320dp 窄窗口验证列表和两轮循环回放，2 成功、0 失败。 |
+| `1.0.2-2611101401`，本次附件 | 修复长用例名覆盖结果状态。Android 13 的 320dp 窄窗口再次完成两轮回放，2 成功、0 失败；Android 11 安装启动成功。 |
+
+`app` 与 `common` 模块的自动测试共 218 项，217 项通过，1 项跳过。附件 SHA-256：`0686d02300dd452c054b1f92f79ed5cecb3cf40ee54742e8ac1dfbf96bf7999f`。
+
+此前的 `1.0.2-2611021607` 曾于 2026 年 11 月 2 日在一台 API 33 车机主屏上完成一条 `CLICK` 的普通录制、保存和回放，计数均为 0→1。本次未重新连接实体车机或手机；其他品牌的后台策略、多屏硬件、功耗和长时间运行仍需实测。此前版本保留在[旧发布页](https://github.com/xuegang-cn/release-tools/releases/tag/android-recoder-v1.0.2)。
+
+## 手机模拟器预览
+
+以下截图来自自适应调试包，展示手机单列、横屏双列、320dp 用例列表及两轮回放结果。
+
+<img src="assets/android-recoder-phone/01-phone-home.png" width="280" alt="手机竖屏单列首页" />
+
+![手机横屏双列首页](assets/android-recoder-phone/02-phone-landscape.png)
+
+<img src="assets/android-recoder-phone/03-narrow-cases.png" width="280" alt="320dp 窄窗口用例列表" />
+<img src="assets/android-recoder-phone/04-repeat-result.png" width="280" alt="两轮回放成功" />
 
 ## 实机预览
 
-三张截图均来自本次 API 33 车机主屏，原图为 2560×1600。
+三张截图均来自 2026 年 11 月 2 日的 API 33 车机验证，原图为 2560×1600。
 
 ![Android Recoder 首页](assets/android-recoder/01-home.png)
 
@@ -77,7 +98,15 @@ $deviceArgs = @()
 
 应用需要本机 ADB 时，在设置中填写设备已启用且允许使用的 ADB 服务地址。电脑 USB 调试授权不等于应用本机连接已获授权，首次连接仍可能出现系统调试认证，需在车机上确认。
 
-本次测试设备原有 `5555` 监听，安装过程未开启新的网络监听。其他设备按 ROM 或设备维护方提供的接入方式配置，不默认执行 `adb tcpip 5555`，也不能假定本机 ADB 已开放或无需认证。
+此前车机测试使用设备原有的 `5555` 监听。若设备没有本机 ADB 监听，需按 ROM 或设备维护方提供的方式开启；支持传统 TCP ADB 的设备，可在已获授权的 USB 会话中执行以下命令，再在应用设置中使用 `localhost:5555`：
+
+```powershell
+& $adb @deviceArgs tcpip 5555
+```
+
+此命令会重启设备的调试服务并开启网络监听，设备需先允许调试连接；应用首次连接时仍可能要求设备端确认。只在可信网络中使用，需要关闭传统 TCP 监听时可在连接仍可用的情况下执行 `adb @deviceArgs usb`。Android 11 及以上系统中的“无线调试”可能使用独立的配对码和动态端口，不等同于固定的 `5555` 服务。
+
+API 30 模拟器验证使用了专用端口桥接；该测试配置不能证明实体设备可免授权接入。安装 APK 不会自动取得 ADB、无障碍或系统录屏授权。
 
 ## 3. 悬浮窗、后台与存储权限
 
